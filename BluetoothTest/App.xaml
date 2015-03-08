@@ -1,0 +1,15 @@
+﻿<Application
+    x:Class="BluetoothTest.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BluetoothTest"
+    xmlns:bluetooth="using:Shooters.Bluetooth"
+    xmlns:players="using:BluetoothTest.Model">
+
+    <Application.Resources>
+        <bluetooth:BluetoothConnectionManager x:Key="BluetoothManager" />
+        <players:PlayerList x:Key="PlayerList" />
+    </Application.Resources>
+
+
+</Application>
