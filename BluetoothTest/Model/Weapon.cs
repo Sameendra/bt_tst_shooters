@@ -7,5 +7,13 @@ namespace BluetoothTest.Model
 {
     public class Weapon
     {
+
+        public enum ShotStatus
+        {
+            Missed,
+            Poor,
+            Good,
+            Perfect,
+        }
     }
 }

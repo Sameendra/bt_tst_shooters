@@ -27,17 +27,33 @@ namespace BluetoothTest
     public sealed partial class testPage : Page
     {
         private Geolocator geolocator;
-        private PlayerList nearByplayerList;
+        private PlayerList nearByPlayerList;
         private Player player;
 
         public testPage()
         {
             this.InitializeComponent();
 
-            this.nearByplayerList = App.PlayerList;
+            this.nearByPlayerList = App.PlayerList;
             this.player = App.Player;
 
             
+        }
+
+        public void Bluetooth_MessageReceived(object sender, string message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+
+            Player shotPlayer;
+
+            if((shotPlayer = this.nearByPlayerList.getTheShotPlayer(player, ArduinoController.extractSensorReadings(message)[0])) != null) {
+
+                status_text.Text = "Shot!";
+            }
+            else {
+                status_text.Text = "Missed!";
+            }
+
         }
         
         
@@ -75,7 +91,7 @@ namespace BluetoothTest
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
 
-            player = new Player("Sameendra");
+            player = new Player("Sameendra", 5);
             player.Coordinates.PropertyChanged += Coordinates_PropertyChanged;
 
             altitudeText.DataContext = player.Coordinates;
@@ -121,8 +137,8 @@ namespace BluetoothTest
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             player.Coordinates.unSubscribePropertyChanged();
-            nearByplayerList.Players.Add(player);
-            this.player = new Player("Nimantha");
+            nearByPlayerList.Players.Add(player);
+            this.player = new Player("Nimantha", 5);
             App.Player = this.player;
             player.Coordinates.PropertyChanged += Coordinates_PropertyChanged;
             

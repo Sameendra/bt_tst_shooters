@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace BluetoothTest.Model
 {
-    public class Player
+    public class Player : INotifyPropertyChanged
     {
-        public Player(String name)
+
+        private readonly int pointUpdateLevel;
+
+        public Player(String name, int pointUpdateLevel)
         {
             this.Name = name;
             this.Points = 0;
             this.Coordinates = new Coordinates();
             this.Weapon = null;
+            this.pointUpdateLevel = pointUpdateLevel;
         }
 
         public Player()
@@ -22,7 +27,13 @@ namespace BluetoothTest.Model
 
         public String Name { get; set; }
 
-        public int Points { get; set; }
+        private int points;
+
+        public int Points
+        {
+            get { return points; }
+        }
+
 
         public Coordinates Coordinates { get; set; }
 
@@ -42,5 +53,25 @@ namespace BluetoothTest.Model
             return false;
      
         }
+
+        public void updatePoints()
+        {
+            points += pointUpdateLevel;
+            NotifyPropertyChanged("Points");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(String propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+
+            }
+        }
+
+
     }
 }

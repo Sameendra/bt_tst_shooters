@@ -19,6 +19,7 @@ namespace BluetoothTest
                 System.Diagnostics.Debug.WriteLine(val);
             }
 
+            
 
         }
 

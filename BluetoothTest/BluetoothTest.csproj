@@ -87,6 +87,8 @@
     </Compile>
     <Compile Include="ArduinoController.cs" />
     <Compile Include="BluetoothConnectionManager.cs" />
+    <Compile Include="CommunicationHandler.cs" />
+    <Compile Include="GameController.cs" />
     <Compile Include="Model\Coordinates.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

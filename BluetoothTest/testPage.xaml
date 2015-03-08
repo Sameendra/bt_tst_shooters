@@ -17,6 +17,7 @@
         <TextBox x:Name="altitudeText" HorizontalAlignment="Left" Text="{Binding Mode=OneWay, Path=Altitude}" Margin="183,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="24" Width="207"/>
         <Button Content="start" HorizontalAlignment="Left" Margin="281,242,0,0" VerticalAlignment="Top" FontSize="24" Height="67" Click="Button_Click"/>
         <Button Content="Add &#xD;&#xA;Player" HorizontalAlignment="Left" Margin="281,313,0,0" VerticalAlignment="Top" FontSize="22" Height="93" Width="109" Click="Button_Click_1"/>
+        <TextBlock x:Name="status_text" HorizontalAlignment="Left" Margin="61,488,0,-21" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="72"/>
 
     </Grid>
 </Page>
