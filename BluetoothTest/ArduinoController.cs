@@ -18,6 +18,8 @@ namespace BluetoothTest
             {
                 System.Diagnostics.Debug.WriteLine(val);
             }
+
+
         }
 
         public static async void Bluetooth_ExceptionOccured(object sender, Exception ex)

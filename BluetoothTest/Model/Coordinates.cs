@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using Windows.Devices.Geolocation;
 
 namespace BluetoothTest.Model
 {
@@ -65,6 +66,13 @@ namespace BluetoothTest.Model
             }
         }
 
+        public double getAngleInRelationToNorth(Coordinates coordinates)
+        {
+            double lattitudeDifference = this.latitude - coordinates.Latitude;
+            double longitudeDifference = this.longitue - coordinates.Longitude;
+
+            return Math.Atan2(longitudeDifference, lattitudeDifference);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -78,6 +86,20 @@ namespace BluetoothTest.Model
            
             }
         }
-    
+
+        public void unSubscribePropertyChanged()
+        {
+            this.PropertyChanged = null;
+        }
+
+        public void GeoPositionChanged_EventHandler(Geolocator sender, PositionChangedEventArgs args)
+        {
+
+            this.Latitude = args.Position.Coordinate.Point.Position.Latitude;
+            this.Longitude = args.Position.Coordinate.Point.Position.Longitude;
+            this.Altitude = args.Position.Coordinate.Point.Position.Altitude;
+
+
+        }
     }
 }

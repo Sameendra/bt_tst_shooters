@@ -43,6 +43,17 @@ namespace BluetoothTest
             }
         }
 
+        public static Player Player
+        {
+            get
+            {
+                return App.Current.Resources["Player"] as Player;
+            }
+            set
+            {
+                App.Current.Resources["Player"] = value;
+            }
+        }
 
         private TransitionCollection transitions;
 

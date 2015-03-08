@@ -28,6 +28,19 @@ namespace BluetoothTest.Model
 
         public Weapon Weapon { get; set; }
 
+        public Boolean isShot(Player shootingPlayer, double shootingAngle)
+        {
+            
+            double estimatedAngle = this.Coordinates.getAngleInRelationToNorth(shootingPlayer.Coordinates);
+            System.Diagnostics.Debug.WriteLine("Estimated Angle: " +estimatedAngle);
+            System.Diagnostics.Debug.WriteLine("Actual Angle: " + shootingAngle);
 
+            if (Math.Abs((estimatedAngle - shootingAngle)) < 0.1)
+            {
+                return true;
+            }
+            return false;
+     
+        }
     }
 }

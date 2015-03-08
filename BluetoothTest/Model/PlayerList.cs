@@ -16,6 +16,16 @@ namespace BluetoothTest.Model
         }
         public ObservableCollection<Player> Players { get; set; }
 
-       
+        public Player getTheShotPlayer(Player shootingPlayer, double shootingAngle)
+        {
+            foreach (Player player in Players)
+            {
+                if (player.isShot(shootingPlayer, shootingAngle))
+                {
+                    return player;
+                }
+            }
+            return null;
+        }
     }
 }

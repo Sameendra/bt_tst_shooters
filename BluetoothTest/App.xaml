@@ -9,6 +9,7 @@
     <Application.Resources>
         <bluetooth:BluetoothConnectionManager x:Key="BluetoothManager" />
         <players:PlayerList x:Key="PlayerList" />
+        <players:Coordinates x:Key="Player" />
     </Application.Resources>
 
 

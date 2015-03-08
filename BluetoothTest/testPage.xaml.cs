@@ -34,6 +34,9 @@ namespace BluetoothTest
         {
             this.InitializeComponent();
 
+            this.nearByplayerList = App.PlayerList;
+            this.player = App.Player;
+
             
         }
         
@@ -80,7 +83,7 @@ namespace BluetoothTest
             longitudeText.DataContext = player.Coordinates;
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
 
             //simulateCordinateChangeAsync();
@@ -100,7 +103,7 @@ namespace BluetoothTest
                 //player.Coordinates.Longitude = geoposition.Coordinate.Point.Position.Longitude;
 
 
-                geolocator.PositionChanged += GeoPositionChanged_EventHandler;
+                geolocator.PositionChanged += player.Coordinates.GeoPositionChanged_EventHandler;
       
 
                 //With this 2 lines of code, the app is able to write on a Text Label the Latitude and the Longitude, given by {{Icode|geoposition}}
@@ -114,16 +117,14 @@ namespace BluetoothTest
             } 
         }
 
-        private async void GeoPositionChanged_EventHandler(Geolocator sender, PositionChangedEventArgs args)
-        {
 
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                player.Coordinates.Latitude = args.Position.Coordinate.Point.Position.Latitude;
-                player.Coordinates.Longitude = args.Position.Coordinate.Point.Position.Longitude;
-                player.Coordinates.Altitude = args.Position.Coordinate.Point.Position.Altitude;
-                
-            });
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            player.Coordinates.unSubscribePropertyChanged();
+            nearByplayerList.Players.Add(player);
+            this.player = new Player("Nimantha");
+            App.Player = this.player;
+            player.Coordinates.PropertyChanged += Coordinates_PropertyChanged;
             
         }
 
