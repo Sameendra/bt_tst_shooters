@@ -30,7 +30,8 @@
 	<Page.BottomAppBar>
 		<CommandBar>
 			<AppBarButton x:Name="refresh_Button" Icon="Refresh" Label="Refresh" Click="refresh_Button_Click"/>
-		</CommandBar>
+            <AppBarButton Icon="Accept" Label="appbarbutton" Click="AppBarButton_Click"/>
+        </CommandBar>
 	</Page.BottomAppBar>
 
     <Grid>

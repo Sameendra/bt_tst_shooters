@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
 namespace BluetoothTest.Model
@@ -71,7 +72,15 @@ namespace BluetoothTest.Model
             double lattitudeDifference = this.latitude - coordinates.Latitude;
             double longitudeDifference = this.longitue - coordinates.Longitude;
 
-            return Math.Atan2(longitudeDifference, lattitudeDifference);
+            double heading = Math.Atan2(longitudeDifference, lattitudeDifference);
+            heading *= -1;
+
+            if(heading < 0) 
+            {
+                heading += 2 * Math.PI;
+            }
+
+            return heading;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -92,13 +101,16 @@ namespace BluetoothTest.Model
             this.PropertyChanged = null;
         }
 
-        public void GeoPositionChanged_EventHandler(Geolocator sender, PositionChangedEventArgs args)
+        public async void GeoPositionChanged_EventHandler(Geolocator sender, PositionChangedEventArgs args)
         {
 
-            this.Latitude = args.Position.Coordinate.Point.Position.Latitude;
-            this.Longitude = args.Position.Coordinate.Point.Position.Longitude;
-            this.Altitude = args.Position.Coordinate.Point.Position.Altitude;
-
+             await Task.Factory.StartNew(() => 
+             {
+                 this.Latitude = args.Position.Coordinate.Point.Position.Latitude;
+                 this.Longitude = args.Position.Coordinate.Point.Position.Longitude;
+                 this.Altitude = args.Position.Coordinate.Point.Position.Altitude;
+             
+             });
 
         }
     }

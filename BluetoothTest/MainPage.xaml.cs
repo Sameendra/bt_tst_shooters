@@ -37,7 +37,7 @@ namespace BluetoothTest
             this.InitializeComponent();
             spinTarget.Begin();
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            App.BluetoothManager.MessageReceived += ArduinoController.Bluetooth_MessageReceived;
+            //App.BluetoothManager.MessageReceived += ArduinoController.Bluetooth_MessageReceived;
             App.BluetoothManager.ExceptionOccured += ArduinoController.Bluetooth_ExceptionOccured;
 
 
@@ -112,6 +112,11 @@ namespace BluetoothTest
         {
             Frame.Navigate(typeof(testPage));
             
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(GamePlay));
         }
 
     }

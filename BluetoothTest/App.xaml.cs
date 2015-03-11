@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Capture;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -55,6 +57,10 @@ namespace BluetoothTest
             }
         }
 
+        public static MediaCapture MediaCapture { get; set; }
+        public static CaptureElement PreviewElement { get; set; }
+        public static bool IsPreviewing { get; set; }
+
         private TransitionCollection transitions;
 
         /// <summary>
@@ -65,6 +71,26 @@ namespace BluetoothTest
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            
+        }
+
+        public async Task CleanupCaptureResources()
+        {
+           
+            if (IsPreviewing && MediaCapture != null)
+            {
+                await MediaCapture.StopPreviewAsync();
+                IsPreviewing = false;
+            }
+
+            if (MediaCapture != null)
+            {
+                if (PreviewElement != null)
+                {
+                    PreviewElement.Source = null;
+                }
+                MediaCapture.Dispose();
+            }
         }
 
         /// <summary>
@@ -129,7 +155,10 @@ namespace BluetoothTest
 
             // Ensure the current window is active
             Window.Current.Activate();
+
+
         }
+
 
         /// <summary>
         /// Restores the content transitions after the app has launched.
@@ -150,11 +179,13 @@ namespace BluetoothTest
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: Save application state and stop any background activity
+            await CleanupCaptureResources();
+
             deferral.Complete();
         }
     }

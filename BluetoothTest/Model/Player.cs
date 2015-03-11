@@ -14,7 +14,7 @@ namespace BluetoothTest.Model
         public Player(String name, int pointUpdateLevel)
         {
             this.Name = name;
-            this.Points = 0;
+            this.points = 0;
             this.Coordinates = new Coordinates();
             this.Weapon = null;
             this.pointUpdateLevel = pointUpdateLevel;

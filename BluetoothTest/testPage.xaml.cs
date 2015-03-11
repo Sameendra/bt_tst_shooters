@@ -36,6 +36,7 @@ namespace BluetoothTest
 
             this.nearByPlayerList = App.PlayerList;
             this.player = App.Player;
+            App.BluetoothManager.MessageReceived += Bluetooth_MessageReceived;
 
             
         }
@@ -108,7 +109,7 @@ namespace BluetoothTest
             geolocator.DesiredAccuracy = PositionAccuracy.High;
             geolocator.ReportInterval = 1;
             geolocator.MovementThreshold = 0.1;
-            geolocator.DesiredAccuracyInMeters = 1;
+            //geolocator.DesiredAccuracyInMeters = 1;
             
 
             try
@@ -119,7 +120,7 @@ namespace BluetoothTest
                 //player.Coordinates.Longitude = geoposition.Coordinate.Point.Position.Longitude;
 
 
-                geolocator.PositionChanged += player.Coordinates.GeoPositionChanged_EventHandler;
+                geolocator.PositionChanged += GeoPositionChanged_EventHandler;
       
 
                 //With this 2 lines of code, the app is able to write on a Text Label the Latitude and the Longitude, given by {{Icode|geoposition}}
@@ -137,6 +138,7 @@ namespace BluetoothTest
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             player.Coordinates.unSubscribePropertyChanged();
+            nearByPlayerList.Players.Clear();
             nearByPlayerList.Players.Add(player);
             this.player = new Player("Nimantha", 5);
             App.Player = this.player;
@@ -144,8 +146,18 @@ namespace BluetoothTest
             
         }
 
-        
+        private async void GeoPositionChanged_EventHandler(Geolocator sender, PositionChangedEventArgs args)
+        {
 
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                player.Coordinates.Latitude = args.Position.Coordinate.Point.Position.Latitude;
+                player.Coordinates.Longitude = args.Position.Coordinate.Point.Position.Longitude;
+                player.Coordinates.Altitude = args.Position.Coordinate.Point.Position.Altitude;
+
+            });
+
+        }
         
 
         
