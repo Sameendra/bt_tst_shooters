@@ -110,7 +110,8 @@ namespace BluetoothTest
 
         private void CommandInvokedHandler(IUICommand command)
         {
-            Frame.Navigate(typeof(testPage));
+            //Frame.Navigate(typeof(testPage));
+            Frame.Navigate(typeof(GamePlay));
             
         }
 

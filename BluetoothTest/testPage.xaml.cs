@@ -36,7 +36,7 @@ namespace BluetoothTest
 
             this.nearByPlayerList = App.PlayerList;
             this.player = App.Player;
-            App.BluetoothManager.MessageReceived += Bluetooth_MessageReceived;
+            //App.BluetoothManager.MessageReceived += Bluetooth_MessageReceived;
 
             
         }
