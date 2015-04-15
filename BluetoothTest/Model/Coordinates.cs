@@ -69,11 +69,11 @@ namespace BluetoothTest.Model
 
         public double getAngleInRelationToNorth(Coordinates coordinates)
         {
-            double lattitudeDifference = this.latitude - coordinates.Latitude;
-            double longitudeDifference = this.longitue - coordinates.Longitude;
+            double lattitudeDifference = coordinates.Latitude - this.latitude;
+            double longitudeDifference = coordinates.Longitude - this.longitue;
 
-            double heading = Math.Atan2(longitudeDifference, lattitudeDifference);
-            heading *= -1;
+            double heading = Math.Atan2(lattitudeDifference, longitudeDifference);
+            //heading *= -1;
 
             if(heading < 0) 
             {
@@ -113,5 +113,22 @@ namespace BluetoothTest.Model
              });
 
         }
+
+        public double DistanceTo(Coordinates coordinates)
+        {
+            double rlat1 = Math.PI * this.latitude / 180;
+            double rlat2 = Math.PI * coordinates.latitude / 180;
+            double theta = this.longitue - coordinates.longitue;
+            double rtheta = Math.PI * theta / 180;
+            
+            double dist = Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) * Math.Cos(rlat2) * Math.Cos(rtheta);
+            
+            dist = Math.Acos(dist);
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
+
+            return dist * 1609.344;
+        }
+
     }
 }

@@ -70,28 +70,11 @@ namespace BluetoothTest
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += this.OnSuspending;
+            
             
         }
 
-        public async Task CleanupCaptureResources()
-        {
-           
-            if (IsPreviewing && MediaCapture != null)
-            {
-                await MediaCapture.StopPreviewAsync();
-                IsPreviewing = false;
-            }
-
-            if (MediaCapture != null)
-            {
-                if (PreviewElement != null)
-                {
-                    PreviewElement.Source = null;
-                }
-                MediaCapture.Dispose();
-            }
-        }
+        
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -179,14 +162,6 @@ namespace BluetoothTest
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private async void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-
-            // TODO: Save application state and stop any background activity
-            await CleanupCaptureResources();
-
-            deferral.Complete();
-        }
+        
     }
 }

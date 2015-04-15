@@ -1,0 +1,45 @@
+﻿<UserControl
+    x:Class="BluetoothTest.UserControls.AmmoIndicator.AmmoIndicator"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BluetoothTest.UserControls.AmmoIndicator"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="80"
+    d:DesignWidth="400">
+    
+    <Grid>
+    	<Canvas Margin="0" VerticalAlignment="Center" RenderTransformOrigin="0.5,0" HorizontalAlignment="Right">
+    		
+    		<Image Name="pv1" Source="Digits/0.png" RenderTransformOrigin="0,0">
+    			<Image.RenderTransform>
+    				<CompositeTransform TranslateX="-40" TranslateY="-25"/>
+    			</Image.RenderTransform>
+    		</Image>
+    	</Canvas>
+		<Canvas Margin="0" VerticalAlignment="Center" RenderTransformOrigin="0.5,0" HorizontalAlignment="Right">
+    		
+    		<Image Name="pv10" Source="Digits/0.png" RenderTransformOrigin="0,0">
+    			<Image.RenderTransform>
+    				<CompositeTransform TranslateX="-85" TranslateY="-25"/>
+    			</Image.RenderTransform>
+    		</Image>
+    	</Canvas>
+
+		<Canvas Margin="0" VerticalAlignment="Center" RenderTransformOrigin="0.5,0" HorizontalAlignment="Right">
+    		
+    		<Image Name="pv100" Source="Digits/0.png" RenderTransformOrigin="0,0">
+    			<Image.RenderTransform>
+    				<CompositeTransform TranslateX="-130" TranslateY="-25"/>
+    			</Image.RenderTransform>
+    		</Image>
+    	</Canvas>
+		<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="Images/bullet.png" RenderTransformOrigin="0.5,0.5">
+			<Image.RenderTransform>
+				<CompositeTransform ScaleX="0.75" ScaleY="0.7" TranslateX="50"/>
+			</Image.RenderTransform>
+		</Image>
+
+    </Grid>
+</UserControl>

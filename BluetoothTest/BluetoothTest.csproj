@@ -94,6 +94,11 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\EmptyAmmoException.cs" />
+    <Compile Include="Model\HubPlayer.cs" />
+    <Compile Include="Model\Magazine.cs" />
+    <Compile Include="Model\Pistol.cs" />
+    <Compile Include="Model\PistolMagazine.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\PlayerList.cs" />
     <Compile Include="Model\Weapon.cs" />
@@ -103,8 +108,14 @@
     <Compile Include="testPage.xaml.cs">
       <DependentUpon>testPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\AmmoIndicator\AmmoIndicator.xaml.cs">
+      <DependentUpon>AmmoIndicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\HealthIndicator.xaml.cs">
       <DependentUpon>HealthIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ShotIndicator\ShotIndicator.xaml.cs">
+      <DependentUpon>ShotIndicator.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +124,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\soundClips\emptyGunClick.mp3" />
+    <Content Include="Assets\soundClips\PistolGunShot.mp3" />
     <Content Include="Target\Layer 0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -128,6 +141,17 @@
     <Content Include="target_Images\Layer 5.png" />
     <Content Include="target_Images\Layer 7 copy.png" />
     <Content Include="target_Images\Layer 7.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\0.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\1.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\2.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\3.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\4.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\5.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\6.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\7.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\8.png" />
+    <Content Include="UserControls\AmmoIndicator\Digits\9.png" />
+    <Content Include="UserControls\AmmoIndicator\Images\bullet.png" />
     <Content Include="UserControls\Bars_Images\Layer 2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -182,17 +206,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\AmmoIndicator\AmmoIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\HealthIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ShotIndicator\ShotIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Design\projectGuides.guides" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\" />
     <Folder Include="UserControls\HealthIndicator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Client">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\portable-win81+wpa81\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client.Store">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\portable-win81+wpa81\Microsoft.AspNet.SignalR.Client.Store.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\wpa81\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
@@ -201,6 +251,11 @@
     <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

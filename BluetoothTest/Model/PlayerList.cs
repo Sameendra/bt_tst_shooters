@@ -20,12 +20,24 @@ namespace BluetoothTest.Model
         {
             foreach (Player player in Players)
             {
-                if (player.isShot(shootingPlayer, shootingAngle))
+                if (shootingPlayer.isShot(player, shootingAngle))
                 {
                     return player;
                 }
             }
             return null;
+        }
+
+        public bool contains(Player player)
+        {
+            foreach (Player opponetPlayer in Players)
+            {
+                if (opponetPlayer.ConnectionID.Equals(player.ConnectionID))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
